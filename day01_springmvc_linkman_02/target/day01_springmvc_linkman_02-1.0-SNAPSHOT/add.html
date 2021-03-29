@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加联系人</title>
+    <script src="js/axios-0.18.0.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!--不同步提交表单-->
+        <form action="/linkman/add" method="post" onsubmit="return false">
+            姓名<input type="text" name="name" v-model="linkman.name"><br>
+            年龄<input type="text" name="age" v-model="linkman.age"><br>
+            性别<input type="text" name="sex" v-model="linkman.sex"><br>
+            地址<input type="text" name="address" v-model="linkman.address"><br>
+            qq<input type="text" name="qq" v-model="linkman.qq"><br>
+            email<input type="text" name="email" v-model="linkman.email"><br>
+            <input type="submit" value="提交" @click="addLinkMan">
+        </form>
+    </div>
+
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                linkman:{}
+            },
+            methods:{
+                addLinkMan(){
+                    let params = this.linkman
+                    //发送异步请求提交请求参数
+                    axios.post("/linkman/add",params).then(response=>{
+                        if (response.data.flag) {
+                            //添加成功
+                            //跳转到linkman.html页面
+                            location.href = "/linkman.html"
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>
